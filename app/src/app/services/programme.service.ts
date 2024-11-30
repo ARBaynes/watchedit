@@ -10,7 +10,7 @@ import { Programme } from '../models/programme';
 @Injectable({ providedIn: 'root' })
 export class ProgrammeService {
 
-  private programmesUrl = 'api/programmes';
+  private programmesUrl = 'http://127.0.0.1:8000/api/programmes';
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })

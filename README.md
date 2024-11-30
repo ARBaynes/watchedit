@@ -18,4 +18,6 @@ This app will help users to review programmes they have watched on the BBC platf
 ## Developer Notes
 
 Here I will note any future features and ideas I would implement with more time:
-* 
+* TBA
+
+If you notice an error along the lines of `Notice: file_put_contents(): Write of 70 bytes failed with errno=32 Broken pipe in watchedit/api/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php on line 21`, that appears to be a larger issue
