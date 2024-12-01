@@ -40,7 +40,7 @@ export class ProgrammeComponent implements OnInit {
     }
 
     onDelete(id: number): void {
-        if (confirm("Are you sure you want to delete this programme?")) {
+        if (confirm('Are you sure you want to delete this programme?')) {
             this.programmeService.delete(id).subscribe(response => {
                 this.onProgrammeChanged.emit();
             });

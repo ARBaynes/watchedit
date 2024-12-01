@@ -35,3 +35,31 @@
   border: none !important;
   margin: 25px 15px 20px 15px;
 }
+
+#programmes__toggle {
+  text-align: right;
+  display: block;
+  margin: 10px 15px 0 15px;
+}
+
+.programmes__grid {
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  padding: 10px;
+}
+
+.programmes__grid__item {
+  margin: 1rem 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  border: solid $studios-tertiary-pale-grey;
+  border-radius: 5px;
+  grid-column: auto;
+}
+
+
+@media (max-width: 694px) {
+  .programmes__grid {grid-template-columns: auto;}
+}

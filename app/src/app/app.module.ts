@@ -12,18 +12,24 @@ import { AppComponent } from './app.component';
 import { ProgrammesComponent } from './components/programmes/programmes.component';
 import { ProgrammeComponent } from './components/programme/programme.component';
 import { ProgrammeService } from './services/programme.service';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatCardModule} from '@angular/material/card';
+import { ProgrammeCardComponent } from './components/programme-card/programme-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProgrammesComponent,
     ProgrammeComponent,
+    ProgrammeCardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    MatGridListModule,
+    MatCardModule,
     // HttpClientInMemoryWebApiModule.forRoot(
     //   InMemoryDataService, { dataEncapsulation: false }
     // ),
