@@ -2,41 +2,100 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Programme;
+use App\Classes\ApiResponseClass;
+use App\Http\Requests\CreateProgrammeRequest;
+use App\Http\Requests\UpdateProgrammeRequest;
+use App\Http\Resources\ProgrammeResource;
+use App\Interfaces\ProgrammeRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProgrammeController extends Controller
 {
+    private ProgrammeRepositoryInterface $programmeRepository;
+
+    public function __construct(ProgrammeRepositoryInterface $programmeRepository)
+    {
+        $this->programmeRepository = $programmeRepository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
     public function index(): JsonResponse
     {
-        $programmes = Programme::all();
-        return response()->json($programmes);
+        $data = $this->programmeRepository->index();
+
+        return ApiResponseClass::sendResponse(ProgrammeResource::collection($data));
     }
 
-    public function create(Request $request): JsonResponse
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function create(CreateProgrammeRequest $request): ?JsonResponse
     {
-        $programme = new Programme();
-        $programme->name = $request->name;
-        $programme->genre = $request->genre;
-        $programme->rating = $request->rating;
-        $programme->comments = $request->comments;
-        $programme->save();
-        return response()->json($programme.' created.', 201);
+        $details =[
+            'name' => $request->name,
+            'genre' => $request->genre,
+            'rating' => (int) $request->rating,
+            'comments' => $request->comments
+        ];
+        DB::beginTransaction();
+        try{
+            $programme = $this->programmeRepository->create($details);
+
+            DB::commit();
+            return ApiResponseClass::sendResponse(
+                new ProgrammeResource($programme),
+                'Programme created successfully',
+                201
+            );
+
+        }catch(\Exception $ex){
+            return ApiResponseClass::rollback($ex);
+        }
     }
 
-    public function read(Programme $programme): JsonResponse
+    /**
+     * Display the specified resource.
+     */
+    public function read($id): ?JsonResponse
     {
-        return response()->json($programme);
+        $programme = $this->programmeRepository->getById($id);
+
+        return ApiResponseClass::sendResponse(new ProgrammeResource($programme));
     }
 
-    public function update(Request $request, Programme $programme): JsonResponse
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateProgrammeRequest $request, $id): ?JsonResponse
     {
-        return response()->json($programme, 200);
+        $updateDetails =[
+            'name' => $request->name,
+            'genre' => $request->genre,
+            'rating' => $request->rating,
+            'comments' => $request->comments
+        ];
+        DB::beginTransaction();
+        try{
+            $programme = $this->programmeRepository->update($updateDetails,$id);
+
+            DB::commit();
+            return ApiResponseClass::sendResponse($programme, 'Programme updated successfully');
+
+        } catch (\Exception $e){
+            return ApiResponseClass::rollback($e);
+        }
     }
 
-    public function delete(Programme $programme): JsonResponse
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function delete($id): ?JsonResponse
     {
-        return response()->json($programme, 200);
+        $this->programmeRepository->delete($id);
+
+        return ApiResponseClass::sendResponse('Programme deleted successfully',204);
     }
 }

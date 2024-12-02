@@ -8,6 +8,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// Index
 Route::get('/programmes', [ProgrammeController::class, 'index']);
 // Create
 Route::post('/programmes', [ProgrammeController::class, 'create']);
