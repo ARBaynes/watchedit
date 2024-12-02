@@ -1,19 +1,12 @@
 <?php
 
-namespace App\Classes;
+namespace App\Services;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Log;
 
-class ApiResponseClass
+class ApiResponseService
 {
-    public static function rollback(\Exception $e, string $message ="Process not completed, Db rolling back...")
-    {
-        DB::rollBack();
-        self::throw($e, $message);
-    }
-
     public static function throw(\Exception $e, ?string $message)
     {
         Log::info($e);

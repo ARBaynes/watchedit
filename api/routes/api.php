@@ -15,6 +15,6 @@ Route::post('/programmes', [ProgrammeController::class, 'create']);
 // Read
 Route::get('/programmes/{id}', [ProgrammeController::class, 'read']);
 // Update
-Route::put('/programmes/{id}', [ProgrammeController::class, 'update']);
+Route::put('/programmes', [ProgrammeController::class, 'update']);
 // Delete
 Route::delete('/programmes/{id}', [ProgrammeController::class, 'delete']);

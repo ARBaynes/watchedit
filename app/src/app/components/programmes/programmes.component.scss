@@ -42,7 +42,7 @@
   margin: 10px 15px 0 15px;
 }
 
-.programmes__grid {
+#programmes__grid {
   display: grid;
   place-items: center;
   margin-bottom: 10px;
@@ -57,6 +57,7 @@
   border: solid $studios-tertiary-pale-grey;
   border-radius: 5px;
   width: 60%;
+  height: 90%;
   grid-column: auto;
 }
 

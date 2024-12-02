@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Programme} from '../../models/programme';
 import {ProgrammeService} from '../../services/programme.service';
-import * as movieArt from 'movie-art';
+import {MovieArtService} from '../../services/movie-art.service';
 
 @Component({
     selector: 'app-programme',
@@ -12,19 +12,14 @@ export class ProgrammeComponent implements OnInit {
     @Input() programme: Programme;
     @Output() programmeChanged = new EventEmitter<boolean>();
 
-    constructor(private programmeService: ProgrammeService) {
+    constructor(
+        private programmeService: ProgrammeService,
+        private movieArtService: MovieArtService
+    ) {
     }
 
     ngOnInit(): void {
-        movieArt(this.programme.name).then((response: any): void => {
-            if (typeof response === 'string') {
-                this.programme.art = response;
-            } else {
-                this.programme.art = 'https://placehold.co/400x600.png?text=No+Artwork+Available';
-            }
-        }).error((): void => {
-            console.log('Error fetching movie art');
-        });
+        this.movieArtService.getArt(this.programme);
     }
 
     onSave(programme: Programme): void {

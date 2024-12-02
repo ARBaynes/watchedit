@@ -35,7 +35,7 @@
         </div>
 
         <ng-template #gridView>
-            <div class="programmes__grid">
+            <div id="programmes__grid">
                 <div class="programmes__grid__item" *ngFor="let programme of programmes" >
                     <app-programme-card [programme]="programme"
                                         (programmeChanged)="getProgrammes()"

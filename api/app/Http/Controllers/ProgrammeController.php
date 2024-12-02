@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Classes\ApiResponseClass;
+use App\Services\ApiResponseService;
 use App\Http\Requests\CreateProgrammeRequest;
 use App\Http\Requests\UpdateProgrammeRequest;
 use App\Http\Resources\ProgrammeResource;
 use App\Interfaces\ProgrammeRepositoryInterface;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\DB;
 
 class ProgrammeController extends Controller
 {
@@ -26,7 +25,7 @@ class ProgrammeController extends Controller
     {
         $data = $this->programmeRepository->index();
 
-        return ApiResponseClass::sendResponse(ProgrammeResource::collection($data));
+        return ApiResponseService::sendResponse(ProgrammeResource::collection($data));
     }
 
     /**
@@ -40,19 +39,15 @@ class ProgrammeController extends Controller
             'rating' => (int) $request->rating,
             'comments' => $request->comments
         ];
-        DB::beginTransaction();
         try{
             $programme = $this->programmeRepository->create($details);
 
-            DB::commit();
-            return ApiResponseClass::sendResponse(
+            return ApiResponseService::sendResponse(
                 new ProgrammeResource($programme),
-                'Programme created successfully',
-                201
+                'Programme created successfully'
             );
-
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            return ApiResponseService::sendResponse('Create operation failed.', 500);
         }
     }
 
@@ -63,13 +58,13 @@ class ProgrammeController extends Controller
     {
         $programme = $this->programmeRepository->getById($id);
 
-        return ApiResponseClass::sendResponse(new ProgrammeResource($programme));
+        return ApiResponseService::sendResponse(new ProgrammeResource($programme));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProgrammeRequest $request, $id): ?JsonResponse
+    public function update(UpdateProgrammeRequest $request): ?JsonResponse
     {
         $updateDetails =[
             'name' => $request->name,
@@ -77,15 +72,11 @@ class ProgrammeController extends Controller
             'rating' => $request->rating,
             'comments' => $request->comments
         ];
-        DB::beginTransaction();
         try{
-            $programme = $this->programmeRepository->update($updateDetails,$id);
-
-            DB::commit();
-            return ApiResponseClass::sendResponse($programme, 'Programme updated successfully');
-
+            $this->programmeRepository->update($updateDetails, $request->id);
+            return ApiResponseService::sendResponse('Programme updated successfully', 204);
         } catch (\Exception $e){
-            return ApiResponseClass::rollback($e);
+            return ApiResponseService::sendResponse('Update operation failed.', 500);
         }
     }
 
@@ -96,6 +87,6 @@ class ProgrammeController extends Controller
     {
         $this->programmeRepository->delete($id);
 
-        return ApiResponseClass::sendResponse('Programme deleted successfully',204);
+        return ApiResponseService::sendResponse('Programme deleted successfully',204);
     }
 }
