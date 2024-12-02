@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Programme} from '../../models/programme';
+import {RatingEmojis} from '../../enums/rating-emojis';
 import * as movieArt from 'movie-art';
 
 @Component({
@@ -9,7 +10,7 @@ import * as movieArt from 'movie-art';
 })
 export class ProgrammeCardComponent implements OnInit {
   @Input() programme: Programme;
-  @Output() onProgrammeChanged = new EventEmitter<boolean>();
+  @Output() programmeChanged = new EventEmitter<boolean>();
 
   constructor() { }
 
@@ -25,4 +26,8 @@ export class ProgrammeCardComponent implements OnInit {
     });
   }
 
+  getEmoji(): string {
+    // A small fun addition for a personal touch :)
+    return RatingEmojis[this.programme.rating - 1];
+  }
 }

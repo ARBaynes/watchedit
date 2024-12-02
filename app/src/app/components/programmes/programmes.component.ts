@@ -16,7 +16,6 @@ export class ProgrammesComponent implements OnInit {
         comments: ''
     };
     display = 'grid';
-
     constructor(private programmeService: ProgrammeService) {
     }
 

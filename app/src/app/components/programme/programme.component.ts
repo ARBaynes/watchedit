@@ -10,7 +10,7 @@ import * as movieArt from 'movie-art';
 })
 export class ProgrammeComponent implements OnInit {
     @Input() programme: Programme;
-    @Output() onProgrammeChanged = new EventEmitter<boolean>();
+    @Output() programmeChanged = new EventEmitter<boolean>();
 
     constructor(private programmeService: ProgrammeService) {
     }
@@ -29,20 +29,20 @@ export class ProgrammeComponent implements OnInit {
 
     onSave(programme: Programme): void {
         this.programmeService.save(programme).subscribe(response => {
-            this.onProgrammeChanged.emit();
+            this.programmeChanged.emit();
         });
     }
 
     onUpdate(programme: Programme): void {
         this.programmeService.update(programme).subscribe(response => {
-            this.onProgrammeChanged.emit();
+            this.programmeChanged.emit();
         });
     }
 
     onDelete(id: number): void {
         if (confirm('Are you sure you want to delete this programme?')) {
             this.programmeService.delete(id).subscribe(response => {
-                this.onProgrammeChanged.emit();
+                this.programmeChanged.emit();
             });
         }
     }

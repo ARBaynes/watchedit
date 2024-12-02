@@ -6,10 +6,8 @@ import { catchError, map } from 'rxjs/operators';
 
 import { Programme } from '../models/programme';
 
-
 @Injectable({ providedIn: 'root' })
 export class ProgrammeService {
-
   private programmesUrl = 'http://127.0.0.1:8000/api/programmes';
 
   httpOptions = {
@@ -17,7 +15,9 @@ export class ProgrammeService {
   };
 
   constructor(
-    private http: HttpClient) { }
+    private http: HttpClient
+  ) {
+  }
 
   getAll(): Observable<Programme[]> {
     return this.http.get<Programme[]>(this.programmesUrl)
@@ -35,7 +35,7 @@ export class ProgrammeService {
 
   save(programme: Programme): Observable<Programme> {
     return this.http.post<Programme>(this.programmesUrl, programme, this.httpOptions).pipe(
-      catchError(this.handleError<Programme>('save'))
+      catchError(this.handleError<Programme>('create'))
     );
   }
 

@@ -2,11 +2,13 @@
 @import "../../../styles.scss";
 
 .programme_card {
+  text-align: center;
 }
 
 
 .programme_card__item {
   text-align: center;
+  text-wrap: wrap;
 }
 
 .programme_card__item--poster{

@@ -2,7 +2,7 @@
     <h2 class="no__border--top">New Programme</h2>
     <div class="programmes__list__item programmes__list__item--new">
         <app-programme [programme]="blankProgramme"
-                       (onProgrammeChanged)="getProgrammes()">
+                       (programmeChanged)="getProgrammes()">
         </app-programme>
     </div>
 
@@ -29,7 +29,7 @@
         <div class="programmes__list" role="list" *ngIf="display === 'list'; else gridView">
             <div class="programmes__list__item" *ngFor="let programme of programmes" role="listitem">
                 <app-programme [programme]="programme"
-                               (onProgrammeChanged)="getProgrammes()">
+                               (programmeChanged)="getProgrammes()">
                 </app-programme>
             </div>
         </div>
@@ -37,7 +37,9 @@
         <ng-template #gridView>
             <div class="programmes__grid">
                 <div class="programmes__grid__item" *ngFor="let programme of programmes" >
-                    <app-programme-card [programme]="programme"></app-programme-card>
+                    <app-programme-card [programme]="programme"
+                                        (programmeChanged)="getProgrammes()"
+                    ></app-programme-card>
                 </div>
             </div>
         </ng-template>
