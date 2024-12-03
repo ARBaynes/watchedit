@@ -44,7 +44,7 @@ class ProgrammeController extends Controller
 
             return ApiResponseService::sendResponse(
                 new ProgrammeResource($programme),
-                'Programme created successfully'
+                201
             );
         }catch(\Exception $ex){
             return ApiResponseService::sendResponse('Create operation failed.', 500);

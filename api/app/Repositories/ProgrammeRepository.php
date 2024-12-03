@@ -23,7 +23,7 @@ class ProgrammeRepository implements ProgrammeRepositoryInterface
         return Programme::create($data);
     }
 
-    public function update(array $data,$id): bool
+    public function update(array $data,$id): Programme
     {
         return Programme::whereId($id)->update($data);
     }
