@@ -15,7 +15,7 @@ export class ProgrammesComponent implements OnInit {
         rating: 0,
         comments: ''
     };
-
+    display = 'grid';
     constructor(private programmeService: ProgrammeService) {
     }
 
@@ -27,4 +27,7 @@ export class ProgrammesComponent implements OnInit {
         this.programmeService.getAll().subscribe(programmes => this.programmes = programmes);
     }
 
+    changeDisplay(mode: string): void {
+        this.display = mode;
+    }
 }

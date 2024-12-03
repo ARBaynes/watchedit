@@ -1,0 +1,19 @@
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+@import "../../../styles.scss";
+
+.programme_card {
+  text-align: center;
+}
+
+.programme_card__item {
+  text-align: center;
+  text-wrap: wrap;
+}
+
+.programme_card__item--poster{
+  text-align: center;
+  max-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 10px;
+}
