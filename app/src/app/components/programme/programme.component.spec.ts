@@ -29,12 +29,6 @@ describe('ProgrammeComponent', () => {
   });
 
   it('should create', () => {
-    component.programme = {
-      name: 'Game of Thrones',
-      genre: 'Fantasy',
-      rating: 1,
-      comments: 'What happened to that last season?'
-    };
     fixture.detectChanges();
     expect(component).toBeTruthy();
   });

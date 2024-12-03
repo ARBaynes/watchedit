@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Programme;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class ProgrammeSeeder extends Seeder
@@ -12,7 +13,7 @@ class ProgrammeSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = \Faker\Factory::create();
+        $faker = Factory::create();
         for ($i = 0; $i < 10; $i++) {
             Programme::create([
                 'name' => $faker->word,
